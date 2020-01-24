@@ -36,7 +36,7 @@ public class Account implements java.io.Serializable{
 		for(String s: this.users){
 			users += ":"+s;
 		}
-		return accountNumber+":"+balance + users;
+		return accountNumber+":"+balance +":"+serialVersionUID+ users;
 	}
 	int getAccountNumber(){
 		return accountNumber;

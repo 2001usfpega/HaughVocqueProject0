@@ -48,7 +48,7 @@ abstract public class User implements Serializable{
 	public void setType(String type) { 
 	}
 	public String toString(){
-		return type+":"+username +':'+ password+':'+fullName;
+		return type+":"+serialVersionUID+":"+username +':'+ password+':'+fullName;
 	}
 }
 
