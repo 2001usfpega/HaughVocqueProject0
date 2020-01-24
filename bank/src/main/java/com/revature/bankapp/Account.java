@@ -7,7 +7,7 @@ public class Account implements java.io.Serializable{
 	/**
 	 * accounts should be organized by number.  each account should have a unique number, a balance, and a list of owners by user name
 	 */
-	
+
 	private static final long serialVersionUID = -8445258882204098398L;
 	private final int accountNumber;
 	private double balance;
@@ -30,13 +30,13 @@ public class Account implements java.io.Serializable{
 		}
 		parent = d;
 	}
-	
+
 	public String toString(){
 		String users = "";
 		for(String s: this.users){
 			users += ":"+s;
 		}
-		return accountNumber+":"+balance +":"+serialVersionUID+ users;
+		return accountNumber+":"+balance + users;
 	}
 	int getAccountNumber(){
 		return accountNumber;
@@ -45,12 +45,12 @@ public class Account implements java.io.Serializable{
 		return balance;
 	}
 	//transfers should be handled by the database object to validate the existence and permissions of the accounts
-	//withdraw and deposit should also have 
+	//withdraw and deposit should also have validation at a higher level/implement passing user reqests down
 	double withdraw(double amount){ //Withdraws a positive amount from the account
-		if(balance - amount>=0&&amount>0){
+		if(balance - amount>=0&&amount>0){  //validates that the passed ammount does not overdraw
 			balance -= amount;
 		}
-		return balance;
+		return balance;  //returning the new balence instead of using void allows for greater interactivity
 	}
 	double deposit(double amount){  //deposits positive values into the account, returns final balance
 		if(amount>=0){
