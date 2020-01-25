@@ -70,8 +70,6 @@ public class Account implements java.io.Serializable{
 			if(balance != 0){  //only empty accounts can close
 				users.add(user);
 				out = false;
-			}else{
-				//parrent.removeAccount(Account Number); //tells the parent to close the account
 			}
 		}
 		return out;  //returns the success or failure of the attempt
