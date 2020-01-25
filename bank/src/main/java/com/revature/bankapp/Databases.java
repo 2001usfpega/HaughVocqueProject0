@@ -238,17 +238,28 @@ public class Databases {
 			writeFiles();
 			return out;
 	}
-	void printAccountInfo(String a){
+	void printAccountInfo(String a, User u){
 	 System.out.println();
 	 Account toPrint;
 	 try{
 		 toPrint = getAccount(Integer.parseInt(a));
 	 } catch (MappingNotFound e) {
-		 System.out.println("Account not found")
+		 System.out.println("Account not found");
 		 return;
 	 }
-
+	 if(validateAccountInfoCheck(u, toPrint)){
+		 System.out.println(toPrint.toString());
+	 }
+ 	}
+	void printAccounts(User u){//should only be exposed to employees
+			if(Employee.class.isInstance(u)){
+				System.out.println();
+				for(Account a: Accountlist.values()){
+					System.out.println(a.toString());
+				}
+			}
 	}
+
 	boolean checkLoggin(String user, String password){
 		User userLoggingIn;
 		try{
