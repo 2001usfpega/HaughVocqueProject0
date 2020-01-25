@@ -61,7 +61,15 @@ public class Databases {
 
 	boolean validateAccountModification(User u, Account a) {// Validates a user has permissions for some action aggaisnt
 																													// an account
-		if (a.checkUser(u.getUsername()) || u.getType().equals("SuperUser")) {
+		if (a.checkUser(u.getUsername()) || Superuser.class.isInstance(u)) {
+			return true;
+		}
+		return false;
+	}
+
+	boolean validateAccountInfoCheck(User u, Account a) {// Validates a user has permissions for some action aggaisnt
+																													// an account
+		if (a.checkUser(u.getUsername()) || Employee.class.isInstance(u)) {
 			return true;
 		}
 		return false;
@@ -228,7 +236,18 @@ public class Databases {
 		}
 			boolean out = account.removeUser(toRemove);
 			writeFiles();
-			return out;]
+			return out;
+	}
+	void printAccountInfo(String a){
+	 System.out.println();
+	 Account toPrint;
+	 try{
+		 toPrint = getAccount(Integer.parseInt(a));
+	 } catch (MappingNotFound e) {
+		 System.out.println("Account not found")
+		 return;
+	 }
+
 	}
 	boolean checkLoggin(String user, String password){
 		User userLoggingIn;
