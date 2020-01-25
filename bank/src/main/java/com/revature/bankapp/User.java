@@ -6,7 +6,7 @@ abstract public class User implements Serializable {
 
 	/**
 	 * V 1.0.0
-	 */
+	 *///
 	private static final long serialVersionUID = 6085027198494302988L;
 	private String username;
 	private String password;

@@ -72,7 +72,7 @@ public class Databases {
 	Databases() {
 		readFiles();
 	}
-
+//
 	boolean validateAccountModification(User u, Account a) {// Validates a user has permissions for some action aggaisnt
 																													// an account
 		if (a.checkUser(u.getUsername()) || Superuser.class.isInstance(u)) {
