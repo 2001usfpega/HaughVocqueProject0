@@ -13,23 +13,15 @@ abstract public class User implements Serializable{
 	private String fullName;
 	final static String type = "User";
 
-	User(String username,  String password, String fullName){// for truly new users strips user input
+	User(String username,  String password, String fullName){//creates new user profiels, call the inhereted versions
 		this.username = username;
 		this.password = password;
 		this.fullName = fullName;
 	}
+	//geters and seters
 	public String getUsername() {
 		return username;
 	}
-	/*
-	* causes way to many issues to actualy use
-	public boolean setUsername(String username) {
-		if(!database.hasUser(username)){
-			database.remap(this.username, this, username)
-			this.username = username;
-		}
-	}
-	*/
 	public String getPassword() {
 		return password;
 	}
@@ -47,6 +39,7 @@ abstract public class User implements Serializable{
 	}
 	public void setType(String type) {
 	}
+	//for listing user profiles, password not shown
 	public String toString(){
 		return type+":"+username +':'+fullName;
 	}

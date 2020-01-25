@@ -12,29 +12,24 @@ public class Account implements java.io.Serializable{
 	private final int accountNumber;
 	private double balance;
 	HashSet<String> users = new HashSet<String>();
-	Account(double openingbalance, int accountnumber, String users, Databases d){
+
+	Account(double openingbalance, int accountnumber, String users){
 		this.accountNumber = accountnumber;
 		this.balance = openingbalance;
 		for(String s: users.split(":")) {
 			this.users.add(s);
 		}
 	}
-	Account(String saved, Databases d){
-		String [] input = saved.split(":");
-		accountNumber = Integer.parseInt(input[0]);
-		balance = Double.parseDouble(input[1]);
-		for(int i = 2; i<input.length; i++){
-			users.add(input[i]);
-		}
-	}
-
+	//for printing account information
 	public String toString(){
 		String users = "";
 		for(String s: this.users){
 			users += ":"+s;
+			//formats an arbitrariy long list of users
 		}
 		return accountNumber+":"+balance + users;
 	}
+	//getters
 	int getAccountNumber(){
 		return accountNumber;
 	}
@@ -55,6 +50,7 @@ public class Account implements java.io.Serializable{
 		}
 		return balance;
 	}
+	//checks if a user is int the accounts list of owners
 	boolean checkUser(String user){
 		return users.contains(user);
 	}
