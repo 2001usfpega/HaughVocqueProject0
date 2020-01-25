@@ -61,7 +61,15 @@ public class Databases {
 
 	boolean validateAccountModification(User u, Account a) {// Validates a user has permissions for some action aggaisnt
 																													// an account
-		if (a.checkUser(u.getUsername()) || u.type.equals("SuperUser")) {
+		if (a.checkUser(u.getUsername()) || Superuser.class.isInstance(u)) {
+			return true;
+		}
+		return false;
+	}
+
+	boolean validateAccountInfoCheck(User u, Account a) {// Validates a user has permissions for some action aggaisnt
+																													// an account
+		if (a.checkUser(u.getUsername()) || Employee.class.isInstance(u)) {
 			return true;
 		}
 		return false;
@@ -72,6 +80,14 @@ public class Databases {
 			return Accountlist.get(a);
 		}else{
 			System.out.println("\r\nCould not resolve account: "+a);
+			throw new MappingNotFound();
+		}
+	}
+	User getUser (String a) throws MappingNotFound {
+		if(Userlist.containsKey(a)){
+			return Userlist.get(a);
+		}else{
+			System.out.println("\r\nCould not resolve User: "+a);
 			throw new MappingNotFound();
 		}
 	}
@@ -134,8 +150,9 @@ public class Databases {
 		}
 		withdraw.withdraw(amount);
 		System.out.println("\r\nSucsesfuly made a withdrawal of "+a+" from "+w);
-
+		writeFiles();
 	}
+
 	void Deposit(User u, String d, String a){
 		Double amount = Double.valueOf(a);
 		Account deposit;
@@ -154,6 +171,106 @@ public class Databases {
 		}
 		deposit.deposit(amount);
 		System.out.println("\r\nSucsesfuly made a deposit of "+a+" from "+d);
-
+		writeFiles();
 	}
+
+	boolean makeClient(String username,String password, String fullName){
+		if(!Userlist.containsKey(username)){
+			Userlist.put(username ,new Client(username, password, fullName));
+			System.out.println("\r\nClient profile created sucsesfuly");
+			return true;
+		}
+		System.out.println("\r\nUsername alredy exists.");
+		return false;
+	}
+
+	boolean makeEmployee(String username,String password, String fullName){//should be exposed only to superusers
+		if(!Userlist.containsKey(username)){
+			Userlist.put(username ,new Employee(username, password, fullName));
+			System.out.println("\r\nEmployee profile created sucsesfuly");
+			writeFiles();
+			return true;
+		}
+		System.out.println("\r\nUsername alredy exists.");
+		return false;
+	}
+	boolean makeSU(String username,String password, String fullName){//should be exposed only to superusers
+		if(!Userlist.containsKey(username)){
+			Userlist.put(username ,new Superuser(username, password, fullName));
+			System.out.println("\r\nAdministrator profile created sucsesfuly");
+			writeFiles();
+			return true;
+		}
+		System.out.println("\r\nUsername alredy exists.");
+		return false;
+	}
+	boolean addUserToAccount(User u, String toadd, String a){
+		User usertoAdd;
+		Account account;
+		try{
+			usertoAdd = getUser(toadd);
+			account = getAccount(Integer.parseInt(a));
+		} catch (MappingNotFound e){
+			return false;
+		}
+
+		if(usertoAdd.getClass().isInstance(Employee.class)){
+			System.out.println("\r\nEmployee profies are not permitted on accounts");
+			return false;
+		}
+		if(!validateAccountModification(u, account)){
+			System.out.println("\r\nAccess denied");
+			return false;
+		}
+		account.addUser(toadd);
+		System.out.println("Added "+toadd+" to "+a);
+		writeFiles();
+		return true;
+	}
+	boolean removeUserFromAccount(User u, String toRemove, String a){ //expose only ot super
+		Account account;
+		try{
+			account = getAccount(Integer.parseInt(a));
+		} catch (MappingNotFound e){
+			return false;
+		}
+			boolean out = account.removeUser(toRemove);
+			writeFiles();
+			return out;
+	}
+	void printAccountInfo(String a, User u){
+	 System.out.println();
+	 Account toPrint;
+	 try{
+		 toPrint = getAccount(Integer.parseInt(a));
+	 } catch (MappingNotFound e) {
+		 System.out.println("Account not found");
+		 return;
+	 }
+	 if(validateAccountInfoCheck(u, toPrint)){
+		 System.out.println(toPrint.toString());
+	 }
+ 	}
+	void printAccounts(User u){//should only be exposed to employees
+			if(Employee.class.isInstance(u)){
+				System.out.println();
+				for(Account a: Accountlist.values()){
+					System.out.println(a.toString());
+				}
+			}
+	}
+
+	boolean checkLoggin(String user, String password){
+		User userLoggingIn;
+		try{
+			userLoggingIn = getUser(user);
+		} catch (MappingNotFound e){
+			return false;
+		}
+		if(password.equals(userLoggingIn.getPassword())){
+			return true;
+		}
+		return false;
+	}
+
 }

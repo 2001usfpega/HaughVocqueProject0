@@ -11,7 +11,6 @@ public class Account implements java.io.Serializable{
 	private static final long serialVersionUID = -8445258882204098398L;
 	private final int accountNumber;
 	private double balance;
-	private Databases parent;
 	HashSet<String> users = new HashSet<String>();
 	Account(double openingbalance, int accountnumber, String users, Databases d){
 		this.accountNumber = accountnumber;
@@ -19,7 +18,6 @@ public class Account implements java.io.Serializable{
 		for(String s: users.split(":")) {
 			this.users.add(s);
 		}
-		parent = d;
 	}
 	Account(String saved, Databases d){
 		String [] input = saved.split(":");
@@ -28,7 +26,6 @@ public class Account implements java.io.Serializable{
 		for(int i = 2; i<input.length; i++){
 			users.add(input[i]);
 		}
-		parent = d;
 	}
 
 	public String toString(){
@@ -70,8 +67,6 @@ public class Account implements java.io.Serializable{
 			if(balance != 0){  //only empty accounts can close
 				users.add(user);
 				out = false;
-			}else{
-				//parrent.removeAccount(Account Number); //tells the parent to close the account
 			}
 		}
 		return out;  //returns the success or failure of the attempt
