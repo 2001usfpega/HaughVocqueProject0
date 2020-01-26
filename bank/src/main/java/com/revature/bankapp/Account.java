@@ -14,20 +14,11 @@ public class Account implements java.io.Serializable {
 	private double balance;
 	HashSet<String> users = new HashSet<String>();
 
-	Account(double openingbalance, int accountnumber, String users, Databases d) {
+	Account(double openingbalance, int accountnumber, String users) {
 		this.accountNumber = accountnumber;
 		this.balance = openingbalance;
 		for (String s : users.split(":")) {
 			this.users.add(s);
-		}
-	}
-
-	Account(String saved, Databases d) {
-		String[] input = saved.split(":");
-		accountNumber = Integer.parseInt(input[0]);
-		balance = Double.parseDouble(input[1]);
-		for (int i = 2; i < input.length; i++) {
-			users.add(input[i]);
 		}
 	}
 

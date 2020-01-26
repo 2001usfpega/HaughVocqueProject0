@@ -48,7 +48,7 @@ public class Databases {
 			Userlist = (HashMap<String, User>) objectIn.readObject();
 			objectIn.close();
 		} catch (FileNotFoundException e) {
-			Userlist.put("root", new Superuser("root", "root", "Default Superuser, change to secure password"));
+			Userlist.put("root", new SuperUser("root", "root", "Default Superuser, change to secure password"));
 			writeFiles();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -65,7 +65,7 @@ public class Databases {
 
 	boolean validateAccountModification(User u, Account a) {// Validates a user has permissions for some action aggaisnt
 															// an account
-		if (a.checkUser(u.getUsername()) || Superuser.class.isInstance(u)) {
+		if (a.checkUser(u.getUsername()) || SuperUser.class.isInstance(u)) {
 			return true;
 		}
 		return false;
@@ -201,7 +201,7 @@ public class Databases {
 
 	boolean makeSU(String username, String password, String fullName) {// should be exposed only to superusers
 		if (!Userlist.containsKey(username)) {
-			Userlist.put(username, new Superuser(username, password, fullName));
+			Userlist.put(username, new SuperUser(username, password, fullName));
 			System.out.println("\r\nAdministrator profile created successfully");
 			writeFiles();
 			return true;

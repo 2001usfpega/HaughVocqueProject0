@@ -11,7 +11,6 @@ abstract public class User implements Serializable {
 	private String username;
 	private String password;
 	private String fullName;
-	final static String type = "User";
 
 	User(String username, String password, String fullName) {// for truly new users strips user input
 		this.username = username;
@@ -23,11 +22,7 @@ abstract public class User implements Serializable {
 		return username;
 	}
 
-	/*
-	 * causes way to many issues to actualy use public boolean setUsername(String
-	 * username) { if(!database.hasUser(username)){ database.remap(this.username,
-	 * this, username) this.username = username; } }
-	 */
+
 	public String getPassword() {
 		return password;
 	}
@@ -44,14 +39,8 @@ abstract public class User implements Serializable {
 		this.fullName = fullName;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-	}
 
 	public String toString() {
-		return type + ":" + username + ':' + fullName;
+		return  "User:" + username + ':' + fullName;
 	}
 }
