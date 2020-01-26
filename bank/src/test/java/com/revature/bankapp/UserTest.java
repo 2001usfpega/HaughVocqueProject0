@@ -41,13 +41,10 @@ class UserTest {
 	@Test
 	void testToString() {
 		User U = new Client("Person","Password","A person");
-		System.out.println(U.toString());
 		assertEquals("Client:Person:A person",U.toString());
 		U = new Employee("Person","Password","A person");
-		System.out.println(U.toString());
 		assertEquals("Employee:Person:A person",U.toString());
 		U = new SuperUser("Person","Password","A person");
-		System.out.println(U.toString());
 		assertEquals("Admin:Person:A person",U.toString());
 	}
 
