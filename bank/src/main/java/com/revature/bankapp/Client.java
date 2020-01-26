@@ -1,6 +1,6 @@
 package com.revature.bankapp;
 
-public class Client extends User{
+public class Client extends User {
 
 	/**
 	 *
@@ -9,7 +9,7 @@ public class Client extends User{
 
 	final static String type = "Client";
 
-	Client(String username,  String password, String fullName){
+	Client(String username, String password, String fullName) {
 		super(username, password, fullName);
 	}
 
